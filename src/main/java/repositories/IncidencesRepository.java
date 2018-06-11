@@ -1,9 +1,9 @@
-package inciDashboard_e5a.repositories;
+package repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import inciDashboard_e5a.model.Incidence;
+import model.Incidence;
 
 @Repository
 public interface IncidencesRepository extends CrudRepository<Incidence, Long> {

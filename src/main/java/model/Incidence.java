@@ -1,4 +1,4 @@
-package inciDashboard_e5a.model;
+package model;
 
 import java.util.HashMap;
 import java.util.Set;

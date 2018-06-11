@@ -1,12 +1,13 @@
-package inciDashboard_e5a.services;
+package services;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import inciDashboard_e5a.model.Incidence;
-import inciDashboard_e5a.repositories.IncidencesRepository;
+import model.Incidence;
+import repositories.IncidencesRepository;
 
 /**
  * Servicio de las incidencias
