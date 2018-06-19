@@ -1,13 +1,19 @@
 package model;
 
-import java.util.HashMap;
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * Clase que representa una incidencia
@@ -16,141 +22,231 @@ import javax.persistence.Transient;
  *
  */
 @Entity
-public class Incidence {
+@Table(name = "Incidence")
+public class Incidence implements Serializable {
 
-    public enum Estado {
-	ABIERTA, CERRADA, SOLUCIONANDOLA
-    }
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	public enum Estado {
+		ABIERTA, ENPROCESO, CERRADA, ANULADA
+	}
 
-    private String nombre;
-    private String descripcion;
-    private Location localizacion;
-    @Transient
-    private Set<String> etiquetas;
-    private HashMap<String, String> campos;
-    private Estado estado;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    public Incidence() {
-    }
+	private String nombre; // nombre de la incidencia
+	private String descripcion; // descripicion de la incidencia
+	private Estado estado;
 
-    public Incidence(String descripcion, String localizacion, Set<String> etiquetas, HashMap<String, String> campos,
-	    Estado estado) {
-	super();
-	this.descripcion = descripcion;
-	this.localizacion = obtenerLocalizacion(localizacion);
-	this.etiquetas = etiquetas;
-	this.campos = campos;
-	this.estado = estado;
-    }
+	@ManyToOne
+	@JoinColumn(name = "agent_id")
+	private Agent agent; // agente que envio la incidencia
+	@Embedded
+	private Location localizacion; // se obtiene, si es posible, del agente
 
-    public Long getId() {
-	return id;
-    }
+	@ElementCollection
+	@CollectionTable(name = "incidence_tags", joinColumns = @JoinColumn(name = "incidence_ID"))
+	private Set<String> tags = new HashSet<String>();
 
-    public void setId(Long id) {
-	this.id = id;
-    }
+	@ElementCollection
+	@CollectionTable(name = "incidence_properties", joinColumns = @JoinColumn(name = "incidence_ID"))
+	private Set<Property> properties = new HashSet<Property>();
 
-    public String getNombre() {
-	return nombre;
-    }
+	@ManyToOne
+	@JoinColumn(name = "incidentManagementStaff_id")
+	private IncidentManagementStaff incidentManagementStaff; // personal de gestion de incidencias al que se le asigno
+																// dicha incidencia
 
-    public void setNombre(String nombre) {
-	this.nombre = nombre;
-    }
+	private String comments; // comentarios del personal de gestion de incidencias sobre dicha incidencia
+	private String fechaCaducidad; // fecha en la que expira la incidencia
+	private boolean peligrosa; // indica si la incidencia tiene propiedades peligrosas
 
-    public String getDescripcion() {
-	return descripcion;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setDescripcion(String descripcion) {
-	this.descripcion = descripcion;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Location getLocalizacion() {
-	return localizacion;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public void setLocalizacion(String localizacion) {
-	this.localizacion = obtenerLocalizacion(localizacion);
-    }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    /**
-     * Método que devuelve la localizacion a partir del string que se pasa por
-     * parametro
-     * 
-     * @param localizacion2
-     * @return
-     */
-    private Location obtenerLocalizacion(String localizacion) {
-	String[] trozos = localizacion.split(";");
-	double latitude = Double.parseDouble(trozos[0]);
-	double longitud = Double.parseDouble(trozos[1]);
-	return new Location(latitude, longitud);
-    }
+	public String getDescripcion() {
+		return descripcion;
+	}
 
-    public Set<String> getEtiquetas() {
-	return etiquetas;
-    }
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 
-    public void setEtiquetas(Set<String> etiquetas) {
-	this.etiquetas = etiquetas;
-    }
+	public Estado getEstado() {
+		return estado;
+	}
 
-    public HashMap<String, String> getCampos() {
-	return campos;
-    }
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
 
-    public void setCampos(HashMap<String, String> campos) {
-	this.campos = campos;
-    }
+	public Agent getAgent() {
+		return agent;
+	}
 
-    public Estado getEstado() {
-	return estado;
-    }
+	public void setAgent(Agent agent) {
+		this.agent = agent;
+	}
 
-    public void setEstado(Estado estado) {
-	this.estado = estado;
-    }
+	public Location getLocalizacion() {
+		return localizacion;
+	}
 
-    @Override
-    public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + ((campos == null) ? 0 : campos.hashCode());
-	result = prime * result + ((etiquetas == null) ? 0 : etiquetas.hashCode());
-	result = prime * result + ((localizacion == null) ? 0 : localizacion.hashCode());
-	return result;
-    }
+	public void setLocalizacion(Location localizacion) {
+		this.localizacion = localizacion;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-	if (this == obj)
-	    return true;
-	if (obj == null)
-	    return false;
-	if (getClass() != obj.getClass())
-	    return false;
-	Incidence other = (Incidence) obj;
-	if (campos == null) {
-	    if (other.campos != null)
-		return false;
-	} else if (!campos.equals(other.campos))
-	    return false;
-	if (etiquetas == null) {
-	    if (other.etiquetas != null)
-		return false;
-	} else if (!etiquetas.equals(other.etiquetas))
-	    return false;
-	if (localizacion == null) {
-	    if (other.localizacion != null)
-		return false;
-	} else if (!localizacion.equals(other.localizacion))
-	    return false;
-	return true;
-    }
+	public Set<String> getTags() {
+		return tags;
+	}
+
+	public void setTags(Set<String> tags) {
+		this.tags = tags;
+	}
+
+	public Set<Property> getProperties() {
+		return properties;
+	}
+
+	public void setProperties(Set<Property> properties) {
+		this.properties = properties;
+	}
+
+	public IncidentManagementStaff getIncidentManagementStaff() {
+		return incidentManagementStaff;
+	}
+
+	public void setIncidentManagementStaff(IncidentManagementStaff incidentManagementStaff) {
+		this.incidentManagementStaff = incidentManagementStaff;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
+	public String getFechaCaducidad() {
+		return fechaCaducidad;
+	}
+
+	public void setFechaCaducidad(String fechaCaducidad) {
+		this.fechaCaducidad = fechaCaducidad;
+	}
+
+	public boolean isPeligrosa() {
+		return peligrosa;
+	}
+
+	public void setPeligrosa(boolean peligrosa) {
+		this.peligrosa = peligrosa;
+	}
+
+	public Incidence() {
+	}
+
+	/**
+	 * Constructor
+	 * 
+	 * @param nombre
+	 * @param descripcion
+	 * @param estado
+	 * @param agent
+	 * @param tags
+	 * @param properties
+	 * @param incidentManagementStaff
+	 * @param comments
+	 * @param fechaCaducidad
+	 * @param peligrosa
+	 */
+	public Incidence(String nombre, String descripcion, Estado estado, Agent agent, Set<String> tags,
+			Set<model.Property> properties, IncidentManagementStaff incidentManagementStaff, String comments,
+			String fechaCaducidad, boolean peligrosa) {
+		super();
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.estado = estado;
+		this.agent = agent;
+		this.localizacion = agent.getLocation(); // Se obtiene del agente
+		this.tags = tags;
+		this.properties = properties;
+		this.incidentManagementStaff = incidentManagementStaff;
+		this.comments = comments;
+		this.fechaCaducidad = fechaCaducidad;
+		this.peligrosa = peligrosa;
+	}
+
+	/**
+	 * Constructor
+	 * 
+	 * @param nombre
+	 * @param descripcion
+	 * @param estado
+	 * @param agent
+	 * @param tags
+	 * @param properties
+	 * @param fechaCaducidad
+	 */
+	public Incidence(String nombre, String descripcion, Estado estado, Agent agent, Set<String> tags,
+			Set<model.Property> properties, String fechaCaducidad) {
+		super();
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.estado = estado;
+		this.agent = agent;
+		this.localizacion = agent.getLocation(); // Se obtiene del agente
+		this.tags = tags;
+		this.properties = properties;
+		this.fechaCaducidad = fechaCaducidad;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Incidence other = (Incidence) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Incidence [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", estado=" + estado
+				+ ", agent=" + agent.toString() + ", localizacion=" + localizacion.toString() + ", tags=" + tags
+				+ ", properties=" + properties + ", incidentManagementStaff=" + incidentManagementStaff.toString()
+				+ ", comments=" + comments + ", fechaCaducidad=" + fechaCaducidad + ", peligrosa=" + peligrosa + "]";
+	}
+
 }
