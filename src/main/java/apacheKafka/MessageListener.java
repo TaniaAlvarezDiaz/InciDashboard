@@ -18,7 +18,7 @@ public class MessageListener {
 
     @KafkaListener(topics = "incidences")
     public void listen(String data) {
-        logger.info("New message received: \"" + data + "\"");
+        logger.info("New incidence received: \"" + data + "\"");
 
         receiveIncidence.receiveIncidence(data);
 }

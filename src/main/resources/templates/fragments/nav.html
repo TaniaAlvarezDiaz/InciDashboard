@@ -1,3 +1,4 @@
+<!-- nav.html -->
 <nav class="navbar navbar-inverse">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -9,10 +10,10 @@
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
-
 				<li><a href="/home">Home</a></li>
-				<li id="incidencesList"><a href="/listIncidences">See
-						incidences</a></li>
+				<li><a href="/incidence/sent"> <span
+						name="assignedIncidents" class="glyphicon glyphicon-user"></span>Incidencias asignadas
+				</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li sec:authorize="!isAuthenticated()"><a href="/login">

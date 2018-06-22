@@ -7,8 +7,15 @@
 	<nav th:replace="fragments/nav" />
 
 	<div class="container">
-		<h2>Modificar estado incidencia</h2>
-		<!--<form class="form-horizontal" method="post" th:action="${'/incidence/modify/' + incidence.id}"> -->
+		<h2>Modificar incidencia</h2>
+		<form class="form-horizontal" method="post" th:action="${'/incidence/modify/' + incidence.id}"> 
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="name">Nombre:</label>
+				<div class="col-sm-10">
+					<input th:value="${incidence.name}" type="text"
+						class="form-control" name="name" readonly="readonly"/>
+				</div>
+			</div>
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="description">Descripcion:</label>
 				<div class="col-sm-10">
@@ -26,22 +33,23 @@
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="pwd">Selecciona nuevo estado:</label>
 				<select name="selectEstado">
-					<option th:each="state : ${listStates}" th:if="state != ${incidence.estado}" th:value="${state}" th:text="${state}"></option>
+					<option th:each="state : ${listStates}" th:value="${state}" th:text="${state}"></option>
 				</select>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="comentarioOperario">Comentarios</label>
+				<div class="col-sm-10">
+					<textarea th:value="${incidencia.comentarioOperario}" type="text"
+						class="form-control" name="comentarioOperario" rows="4"
+						placeholder="Escribe un comentario sobre la incidencia"/>
+				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 					<button id="modificarButton" type="submit" class="btn btn-primary">Modificar</button>
-					<script th:inline="javascript">
-					/*<![CDATA[*/
-			 		 	$("#modificarButton").click(function() {
-		 					$.post("/incidence/modify/${incidence.id}?newState=$("#selectEstado").val()");
-			 		 	});
-		 			/*]]>*/
-				</script>
 				</div>
 			</div>
-		<!--</form> -->
+		</form> 
 	</div>
 
 	<footer th:replace="fragments/footer" />

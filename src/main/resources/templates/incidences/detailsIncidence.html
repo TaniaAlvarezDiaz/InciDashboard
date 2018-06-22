@@ -3,14 +3,14 @@
 <head th:replace="fragments/head" />
 <body>
 
-	<!-- Barra de Navegación superior -->
+	<!-- Barra de Navegacion superior -->
 	<nav th:replace="fragments/nav" />
 
 	<div class="container">
 		<h2>Detalles de la incidencia</h2>
 		<div class="panel panel-default">
-			<div class="panel-heading">Identificador</div>
-			<div class="panel-body" th:text="${incidence.id}"></div>
+			<div class="panel-heading">Nombre</div>
+			<div class="panel-body" th:text="${incidence.nombre}"></div>
 		</div>
 		<div class="panel panel-default">
 			<div class="panel-heading">Descripcion</div>
@@ -24,6 +24,10 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">Estado</div>
 			<div class="panel-body" th:text="${incidence.estado}"></div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">Comentarios</div>
+			<div class="panel-body" th:text="${incidence.comments}"></div>
 		</div>
 	</div>
 
