@@ -5,7 +5,7 @@
 	<!-- Barra de Navegacon superior -->
 	<nav th:replace="fragments/nav" />
 	<div class="container">
-		<p>Incidencias</p>
+		<p>Incidencias asignadas</p>
 		<div class="table-responsive">
 			<table class="table table-hover" id="myTable">
 				<thead>
@@ -26,12 +26,24 @@
 						<td th:text="${incidence.localizacion.getLatitude()} + ' ; ' + ${incidence.localizacion.getLongitud()}"></td>
 						<td th:text="${incidence.estado}"></td>
 						<td><a th:href="${'/incidence/detailsIncidence/' + incidence.id}">Detalles</a></td>
+						<td><a th:href="${'/incidence/modify/' + incidence.id}">Modificar</a></td>
 						<td><a th:href="${'/verMapa/' + incidence.localizacion.getLatitude() + '/' + incidence.localizacion.getLongitud()}">Ver mapa</a></td>
 					</tr>					
 				</tbody>
 			</table>
 		</div>
 	</div>
- 	<script src="/js/actualizaIncidencias.js"></script>
+	
+<!-- 	<script th:inline="javascript"> 
+   	  /*<![CDATA[*/
+ 	  	var evtSource = new EventSource("/getEmitter");
+ 	  	evtSource.onmessage = function(e) {
+ 	  		var obj = JSON.parse(e.data);
+ 	  		$("#myTable").find('tbody').append( "<tr><td>" + obj.id + "</td><td>" + obj.descripcion + "</td><td>" + obj.localizacion + "</td></tr>" );
+ 	  	}
+ 	  /*]]>*/
+  </script> -->
+  
+  <script src="/js/actualizaIncidencias.js"></script>
 </body>
 </html>

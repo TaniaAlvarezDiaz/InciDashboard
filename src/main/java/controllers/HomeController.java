@@ -1,7 +1,16 @@
 package controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import model.IncidentManagementStaff;
+import services.IncidentManagementStaffService;
+import validators.SignUpFormValidator;
 
 /**
  * Controlador para gestionar la pagina de inicio
@@ -12,37 +21,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
 
-    @RequestMapping("/")
-    public String index() {
-	return "home";
-    }
+	@Autowired
+	private SignUpFormValidator signUpFormValidator;
 
-    @RequestMapping("/home")
-    public String home() {
-	return "home";
-    }
-    
-    @RequestMapping("/login")
-    public String login() {
-    	return "login";
-    }
-    
-    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+	@Autowired
+	private IncidentManagementStaffService imsService;
+
+	@RequestMapping("/")
+	public String index() {
+		return "home";
+	}
+
+	@RequestMapping("/home")
+	public String home() {
+		return "home";
+	}
+
+	@RequestMapping("/login")
+	public String login() {
+		return "login";
+	}
+
+	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup(Model model) {
-		//model.addAttribute("agent", new Agent());
 		return "signup";
 	}
-	
+
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public String setUser(@Validated Operator operator, BindingResult result, Model model) {
-		signUpFormValidator.validate(operator, result);
+	public String setUser(@Validated IncidentManagementStaff ims, BindingResult result, Model model) {
+		signUpFormValidator.validate(ims, result);
 		if (result.hasErrors()) {
 			return "signup";
 		}
-		
-		operator.setRole(rolesService.getRoles()[0]);
-		operatorsService.addOperator(operator);
-		securityService.autoLogin(operator.getIdentifier(), operator.getPasswordConfirm());
+
+		imsService.saveIncidentManagementStaff(ims);
 		return "redirect:home";
 	}
 }

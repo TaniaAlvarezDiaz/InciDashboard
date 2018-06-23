@@ -1,4 +1,4 @@
-package util;
+package configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -26,8 +26,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		// es asi porque no esta encriptada, si lo tuviera descomentar
-		auth.userDetailsService(userDetailsService);// .passwordEncoder(bCryptPasswordEncoder());
+		//La contraseña se guarda encriptada
+		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 	}
 
 	@Override

@@ -11,23 +11,23 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import model.Agent;
-import repositories.AgentRepository;
+import model.IncidentManagementStaff;
+import repositories.IncidentManagementStaffRepository;
 
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
-	private AgentRepository agentRepository;
+	private IncidentManagementStaffRepository imsRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Agent user = agentRepository.findByIdentificador(username);
+		IncidentManagementStaff ims = imsRepository.findByIdentificador(username);
 
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_AGENT"));
+		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_IMS"));
 
-		return new org.springframework.security.core.userdetails.User(user.getIdentificador(), user.getPassword(),
+		return new org.springframework.security.core.userdetails.User(ims.getIdentificador(), ims.getPassword(),
 				grantedAuthorities);
 	}
 }
