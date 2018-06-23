@@ -19,6 +19,9 @@
 				</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
+				<li sec:authorize="!isAuthenticated()"><a href="/signup">
+						Signup <span class="glyphicon glyphicon-sign-up"></span>
+				</a></li>
 				<li sec:authorize="!isAuthenticated()"><a href="/login">
 						Login <span class="glyphicon glyphicon-log-in"></span>
 				</a></li>

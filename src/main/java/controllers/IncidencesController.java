@@ -35,7 +35,7 @@ public class IncidencesController {
 		return "/incidences/listAssignedIncidences";
 	}
 
-	@RequestMapping("/incidences/detailsIncidence/{id}")
+	@RequestMapping("/incidence/detailsIncidence/{id}")
 	public String getIncidenceInfo(Model model, @PathVariable Long id) {
 
 		model.addAttribute("incidence", incidenceService.findIncidence(id));
@@ -54,12 +54,15 @@ public class IncidencesController {
 
 	@RequestMapping(value = "/incidence/modify/{id}", method = RequestMethod.POST)
 	public String setModifyInfo(Model model, @PathVariable Long id, @ModelAttribute Incidence incidence) {
+		//Si queremos hacer todo en un paso
+		//incidenceService.modificarIncidencia(incidence);
+		
 		// Modificar estado
 		incidenceService.modificarEstado(id, incidence.getEstado());
 		// Modificar comentarios
 		incidenceService.modificarComentarios(id, incidence.getComments());
 
-		return "redirect:/incidences/detailsIncidence/" + id;
+		return "redirect:/incidence/detailsIncidence/" + id;
 	}
 
 	@RequestMapping("/verMapa/{latitud}/{longitud}")

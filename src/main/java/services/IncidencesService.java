@@ -69,5 +69,10 @@ public class IncidencesService implements GetIncidences, ModifyIncidence{
 	public void modificarComentarios(Long id, String comments) {
 		incidencesRepository.updateCommentsIncidence(id, comments);
 	}
+
+	@Override
+	public void modificarIncidencia(Incidence i) {
+		incidencesRepository.save(i);
+	}
 	
 }

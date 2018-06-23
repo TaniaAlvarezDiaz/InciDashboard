@@ -26,13 +26,13 @@ public class SignUpFormValidator implements Validator {
 		IncidentManagementStaff imsBD = imsService.getIncidentManagementStaffByIdentificador(ims.getIdentificador());
 		
 		if (imsBD != null) {
-			errors.rejectValue("identifier", "Error.signup.identifier.duplicate");
+			errors.rejectValue("identificador", "Error.signup.identifier.duplicate");
 		}
 		if (ims.getIdentificador().length() < 5 || ims.getIdentificador().length() > 24) {
-			errors.rejectValue("identifier", "Error.signup.identifier.length");
+			errors.rejectValue("identificador", "Error.signup.identifier.length");
 		}
 		if (ims.getNombre().length()< 2 || ims.getNombre().length() > 24) {
-			errors.rejectValue("name", "Error.signup.name.length");
+			errors.rejectValue("nombre", "Error.signup.name.length");
 		}
 		if (ims.getPassword().length() < 5 || ims.getPassword().length() > 24) {
 			errors.rejectValue("password", "Error.signup.password.length");

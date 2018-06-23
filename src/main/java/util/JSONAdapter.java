@@ -8,6 +8,8 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
 
 import model.Agent;
@@ -19,6 +21,8 @@ import repositories.AgentRepository;
 import repositories.IncidentManagementStaffRepository;
 
 @Service
+@EnableJpaRepositories(basePackages = {"repositories"})
+@EntityScan(basePackages = {"model"})
 public class JSONAdapter {
 
 	@Autowired

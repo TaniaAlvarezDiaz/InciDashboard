@@ -12,7 +12,7 @@
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="name">Nombre:</label>
 				<div class="col-sm-10">
-					<input th:value="${incidence.name}" type="text"
+					<input th:value="${incidence.nombre}" type="text"
 						class="form-control" name="name" readonly="readonly"/>
 				</div>
 			</div>
@@ -26,21 +26,21 @@
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="pwd">Estado:</label>
 				<div class="col-sm-10">
-					<input th:value="${incidence.estado}" class="form-control" name="estado" 
+					<input th:value="${incidence.estado}" class="form-control" name="estadoInicial" 
 						 readonly="readonly" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="pwd">Selecciona nuevo estado:</label>
-				<select name="selectEstado">
+				<select name="estado">
 					<option th:each="state : ${listStates}" th:value="${state}" th:text="${state}"></option>
 				</select>
 			</div>
 			<div class="form-group">
-				<label class="control-label col-sm-2" for="comentarioOperario">Comentarios</label>
+				<label class="control-label col-sm-2" for="comentarioOperario">Comentarios:</label>
 				<div class="col-sm-10">
-					<textarea th:value="${incidencia.comentarioOperario}" type="text"
-						class="form-control" name="comentarioOperario" rows="4"
+					<textarea th:text="${incidence.comments != null} ? ${incidence.comments}" type="text"
+						class="form-control" name="comments" rows="4"
 						placeholder="Escribe un comentario sobre la incidencia"/>
 				</div>
 			</div>

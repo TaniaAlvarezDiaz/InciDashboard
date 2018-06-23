@@ -21,7 +21,7 @@ public interface IncidencesRepository extends CrudRepository<Incidence, Long> {
 	 * @param identificador
 	 * @return
 	 */
-	@Query("SELECT * from Incidence i WHERE i.incidentManagementStaff.identificador = ?1")
+	@Query("SELECT i from Incidence i WHERE i.incidentManagementStaff.identificador = ?1")
 	public List<Incidence> findIncidences(String identificador);
 	
 	/**
@@ -31,7 +31,7 @@ public interface IncidencesRepository extends CrudRepository<Incidence, Long> {
 	 */
 	@Modifying
 	@Transactional
-	@Query("UPDATE Incidence SET estado = ?2 WHERE id = ?1")
+	@Query("UPDATE Incidence i SET i.estado = ?2 WHERE i.id = ?1")
 	public void updateStateIncidence(Long id, Estado state);
 	
 	/**
@@ -41,7 +41,7 @@ public interface IncidencesRepository extends CrudRepository<Incidence, Long> {
 	 */
 	@Modifying
 	@Transactional
-	@Query("UPDATE Incidence SET comments = ?2 WHERE id = ?1")
+	@Query("UPDATE Incidence i SET i.comments = ?2 WHERE i.id = ?1")
 	public void updateCommentsIncidence(Long id, String comments);
 	
 	/**
