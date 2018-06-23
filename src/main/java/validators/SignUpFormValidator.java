@@ -1,5 +1,7 @@
 package validators;
 
+import java.util.regex.Pattern;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -39,6 +41,9 @@ public class SignUpFormValidator implements Validator {
 		}
 		if (!ims.getPasswordConfirm().equals(ims.getPassword())) {
 			errors.rejectValue("passwordConfirm","Error.signup.passwordConfirm.coincidence");
+		}
+		if (!Pattern.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",ims.getEmail())) {
+			errors.rejectValue("email", "Error.signup.email.format");
 		}
 	}
 }

@@ -19,8 +19,8 @@ public class LoginStep {
 	private String username;
 	private String password;
 	
-	@Dado("^el agente con username \"([^\"]*)\"$")
-	public void el_agente_con_username(String username) throws Throwable {
+	@Dado("^el personal de gestión de incidencias con username \"([^\"]*)\"$")
+	public void el_operador_con_username(String username) throws Throwable {
 		this.username = username;
 	}
 	
@@ -30,15 +30,15 @@ public class LoginStep {
 	}
 
 	@Cuando("^rellene el formulario de login y haga click en el boton \"Enviar\"$")
-	public void el_agente_rellena_formulario_y_pulsa_enviar() throws Throwable {
-		driver.get("http://localhost:8091/login");
+	public void el_operador_rellena_formulario_y_pulsa_enviar() throws Throwable {
+		driver.get("http://localhost:8092/login");
 		driver.findElement(By.name("username")).sendKeys(username);					
 	    driver.findElement(By.name("password")).sendKeys(password);
 	    driver.findElement(By.name("login")).click();
 	}
 
 	@Entonces("^se iniciara sesion y se mostrará una pantalla informativa$")
-	public void el_agente_inicia_sesion_correctamente() throws Throwable {
+	public void el_operador_inicia_sesion_correctamente() throws Throwable {
 		List<WebElement> r = driver.findElements(By.xpath("//*[text() = 'Sistema de gestion de incidencias']"));
 		assertEquals(1, r.size());
 	}

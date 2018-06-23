@@ -13,7 +13,7 @@ import cucumber.api.java.es.Cuando;
 import cucumber.api.java.es.Dado;
 import cucumber.api.java.es.Entonces;
 
-public class SeeIncidencesStep {
+public class SeeAssignedIncidencesStep {
 
 	private WebDriver driver = new HtmlUnitDriver(); // para usar selenium
 	
@@ -29,14 +29,14 @@ public class SeeIncidencesStep {
 		assertEquals(1, r.size());
 	}
 
-	@Cuando("^haga click en el boton \"Incidencias actuales\" de la barra de navegacion$")
-	public void pulse_incidencias_actuales() throws Throwable {
-		driver.findElement(By.name("currentIncidents")).click();
+	@Cuando("^haga click en el boton \"Incidencias asignadas\" de la barra de navegacion$")
+	public void pulse_incidencias_asignadas() throws Throwable {
+		driver.findElement(By.name("assignedIncidents")).click();
 	}
 
-	@Entonces("^se mostrara una tabla con las incidencias actuales$")
+	@Entonces("^se mostrara una tabla con las incidencias asignadas$")
 	public void aparece_tabla_con_incidencias() throws Throwable {
-		List<WebElement> r = driver.findElements(By.xpath("//*[text() = 'Incidencias']"));
+		List<WebElement> r = driver.findElements(By.xpath("//*[text() = 'Incidencias asignadas']"));
 		assertEquals(1, r.size());
 	}
 }

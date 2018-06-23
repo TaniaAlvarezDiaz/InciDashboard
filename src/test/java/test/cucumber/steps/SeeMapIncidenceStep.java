@@ -13,12 +13,12 @@ import cucumber.api.java.es.Cuando;
 import cucumber.api.java.es.Dado;
 import cucumber.api.java.es.Entonces;
 
-public class SeeIncidencesStep {
+public class SeeMapIncidenceStep {
 
-	private WebDriver driver = new HtmlUnitDriver(); // para usar selenium
+private WebDriver driver = new HtmlUnitDriver(); // para usar selenium
 	
-	@Dado("^el personal de gestión de incidencias en la pantalla informativa de la aplicacion$")
-	public void operador_en_pantalla_informativa() throws Throwable {
+	@Dado("^el personal de gestión de incidencias en la pantalla \"Incidencias asignadas\" de la aplicacion$")
+	public void operador_en_pantalla_incidencias_asignadas() throws Throwable {
 		// Hay que iniciar sesion, lo hacemos con susana
 		driver.get("http://localhost:8092/login");
 		driver.findElement(By.name("username")).sendKeys("09847158T");
@@ -27,16 +27,23 @@ public class SeeIncidencesStep {
 
 		List<WebElement> r = driver.findElements(By.xpath("//*[text() = 'Sistema de gestion de incidencias']"));
 		assertEquals(1, r.size());
+		
+		//Vamos a Incidencias asignadas
+		driver.findElement(By.name("assignedIncidents")).click();
+		
+		r = driver.findElements(By.xpath("//*[text() = 'Incidencias asignadas']"));
+		assertEquals(1, r.size());
 	}
 
-	@Cuando("^haga click en el boton \"Incidencias actuales\" de la barra de navegacion$")
-	public void pulse_incidencias_actuales() throws Throwable {
-		driver.findElement(By.name("currentIncidents")).click();
+	@Cuando("^haga click en el boton \"Ver mapa\" de la primera incidencia de la tabla$")
+	public void pulse_ver_mapa() throws Throwable {
+		//Incidencia 1: incendio en el bosque
+		driver.findElement(By.id("mapa1")).click();
 	}
 
-	@Entonces("^se mostrara una tabla con las incidencias actuales$")
+	@Entonces("^se mostrara el mapa de la incidencia$")
 	public void aparece_tabla_con_incidencias() throws Throwable {
-		List<WebElement> r = driver.findElements(By.xpath("//*[text() = 'Incidencias']"));
+		List<WebElement> r = driver.findElements(By.xpath("//*[text() = 'Ubicacion de la incidencia']"));
 		assertEquals(1, r.size());
 	}
 }
