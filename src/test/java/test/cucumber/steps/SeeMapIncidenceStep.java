@@ -17,8 +17,8 @@ public class SeeMapIncidenceStep {
 
 private WebDriver driver = new HtmlUnitDriver(); // para usar selenium
 	
-	@Dado("^el personal de gestión de incidencias en la pantalla \"Incidencias asignadas\" de la aplicacion$")
-	public void operador_en_pantalla_incidencias_asignadas() throws Throwable {
+	@Dado("^el personal de gestión de incidencias en la pantalla \"Incidencias asignadas\"$")
+	public void ims_en_pantalla_incidencias_asignadas() throws Throwable {
 		// Hay que iniciar sesion, lo hacemos con susana
 		driver.get("http://localhost:8092/login");
 		driver.findElement(By.name("username")).sendKeys("09847158T");

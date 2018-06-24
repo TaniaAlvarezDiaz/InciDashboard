@@ -39,7 +39,7 @@ private WebDriver driver = new HtmlUnitDriver(); //para usar selenium
 		this.identificador = identificador;
 	}
 	
-	@Y("^contraseña \"([^\\\"]*)\"$")
+	@Y("^password \"([^\\\"]*)\"$")
 	public void y_password(String contrasena) {
 		this.password = contrasena;
 	}

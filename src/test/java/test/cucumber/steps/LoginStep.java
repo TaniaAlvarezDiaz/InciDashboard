@@ -25,7 +25,7 @@ public class LoginStep {
 	}
 	
 	@Y("^contraseña \"([^\\\"]*)\"$")
-	public void y_password(String contrasena) {
+	public void y_contrasena(String contrasena) {
 		this.password = contrasena;
 	}
 

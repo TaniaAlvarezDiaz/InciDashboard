@@ -28,7 +28,7 @@ public class ModifyIncidenceStep {
 	private IncidencesRepository incidencesRepository;
 
 	@Dado("^el personal de gestión de incidencias en la pantalla \"Incidencias asignadas\" de la aplicacion$")
-	public void operador_en_pantalla_incidencias_asignadas() throws Throwable {
+	public void ims_en_pantalla_incidencias_asignadas() throws Throwable {
 		// Hay que iniciar sesion, lo hacemos con susana
 		driver.get("http://localhost:8092/login");
 		driver.findElement(By.name("username")).sendKeys("09847158T");
@@ -46,7 +46,7 @@ public class ModifyIncidenceStep {
 	}
 
 	@Cuando("^haga click en el boton \"Modificar\" de la primera incidencia de la tabla$")
-	public void pulse_modificar() throws Throwable {
+	public void pulse_modificar_primera_incidencia() throws Throwable {
 		i = incidencesRepository.findById(new Long("1"));
 		// Incidencia 1: incendio en el bosque
 		driver.findElement(By.id("modificar1")).click();

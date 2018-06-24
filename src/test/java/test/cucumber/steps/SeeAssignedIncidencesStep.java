@@ -35,7 +35,7 @@ public class SeeAssignedIncidencesStep {
 	}
 
 	@Entonces("^se mostrara una tabla con las incidencias asignadas$")
-	public void aparece_tabla_con_incidencias() throws Throwable {
+	public void aparece_tabla_con_incidencias_asignadas() throws Throwable {
 		List<WebElement> r = driver.findElements(By.xpath("//*[text() = 'Incidencias asignadas']"));
 		assertEquals(1, r.size());
 	}
