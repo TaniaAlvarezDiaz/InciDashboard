@@ -17,7 +17,7 @@ public class SeeInfoIncidenceStep {
 
 private WebDriver driver = new HtmlUnitDriver(); // para usar selenium
 	
-	@Dado("^el personal de gestión de incidencias en la pantalla \"Incidencias asignadas\" de la aplicacion$")
+	@Dado("^el operador en la pantalla \"Incidencias asignadas\"$")
 	public void operador_en_pantalla_incidencias_asignadas() throws Throwable {
 		// Hay que iniciar sesion, lo hacemos con susana
 		driver.get("http://localhost:8092/login");
