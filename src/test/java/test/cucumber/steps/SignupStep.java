@@ -52,7 +52,7 @@ private WebDriver driver = new HtmlUnitDriver(); //para usar selenium
 	@Cuando("^rellene el formulario de registro y haga click en el boton \"Signup\"$")
 	public void el_operador_rellena_formulario_y_pulsa_signup() throws Throwable {
 		driver.get("http://localhost:8092/signup");
-		driver.findElement(By.name(nombre)).sendKeys(nombre);
+		driver.findElement(By.name("nombre")).sendKeys(nombre);
 		driver.findElement(By.name("email")).sendKeys(email);
 		driver.findElement(By.name("identificador")).sendKeys(identificador);
 	    driver.findElement(By.name("password")).sendKeys(password);

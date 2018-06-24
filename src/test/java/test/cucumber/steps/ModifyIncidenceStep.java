@@ -21,9 +21,10 @@ import repositories.IncidencesRepository;
 public class ModifyIncidenceStep {
 
 	private WebDriver driver = new HtmlUnitDriver(); // para usar selenium
-	
+
 	private Incidence i;
-	
+	Integer id = 1;
+
 	@Autowired
 	private IncidencesRepository incidencesRepository;
 
@@ -47,7 +48,7 @@ public class ModifyIncidenceStep {
 
 	@Cuando("^haga click en el boton \"Modificar\" de la primera incidencia de la tabla$")
 	public void pulse_modificar_primera_incidencia() throws Throwable {
-		i = incidencesRepository.findById(new Long("1"));
+		i = incidencesRepository.findById(id.longValue());
 		// Incidencia 1: incendio en el bosque
 		driver.findElement(By.id("modificar1")).click();
 	}
@@ -57,36 +58,54 @@ public class ModifyIncidenceStep {
 		List<WebElement> r = driver.findElements(By.xpath("//*[text() = 'Modificar incidencia']"));
 		assertEquals(1, r.size());
 	}
-	
+
 	@Dado("^el personal de gestión de incidencias en la pantalla \"Modificar\"$")
 	public void operador_en_pantalla_modificar_incidencia() throws Throwable {
-		List<WebElement> r = driver.findElements(By.xpath("//*[text() = 'Modificar incidencia']"));
+		// Hay que iniciar sesion, lo hacemos con susana
+		driver.get("http://localhost:8092/login");
+		driver.findElement(By.name("username")).sendKeys("09847158T");
+		driver.findElement(By.name("password")).sendKeys("123456");
+		driver.findElement(By.name("login")).click();
+
+		List<WebElement> r = driver.findElements(By.xpath("//*[text() = 'Sistema de gestion de incidencias']"));
+		assertEquals(1, r.size());
+
+		// Vamos a Incidencias asignadas
+		driver.findElement(By.name("assignedIncidents")).click();
+
+		r = driver.findElements(By.xpath("//*[text() = 'Incidencias asignadas']"));
+		assertEquals(1, r.size());
+
+		// Pulsamos en la primera incidencia para modificar
+		driver.findElement(By.id("modificar1")).click();
+
+		r = driver.findElements(By.xpath("//*[text() = 'Modificar incidencia']"));
 		assertEquals(1, r.size());
 	}
-	
+
 	@Cuando("^seleccione el estado \"([^\"])\"$")
 	public void seleccione_estado(Estado estado) throws Throwable {
 		i.setEstado(estado);
 	}
-	
+
 	@Y("^escriba el comentario \"([^\"])\"$")
 	public void escriba_comentario(String comentario) throws Throwable {
 		i.setComments(comentario);
 	}
-	
+
 	@Y("^pulse el botón \"Modificar\"$")
 	public void pulse_modificar_button() throws Throwable {
 		driver.findElement(By.id("modificarButton")).click();
 	}
-	
+
 	@Entonces("^se actualizan dichos valores y se muestra la pantalla \"Detalles\" de la incidencia")
 	public void se_muestra_info_actualizada() throws Throwable {
-		//Se comprueba que se actualizaron los valores
-		Incidence iModificada = incidencesRepository.findById(new Long("1"));
+		// Se comprueba que se actualizaron los valores
+		Incidence iModificada = incidencesRepository.findById(id.longValue());
 		assertEquals(i.toString(), iModificada.toString());
-		
+
 		List<WebElement> r = driver.findElements(By.xpath("//*[text() = 'Detalles de la incidencia']"));
 		assertEquals(1, r.size());
-		
+
 	}
 }

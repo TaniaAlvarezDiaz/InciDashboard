@@ -21,7 +21,7 @@ public interface IncidencesRepository extends CrudRepository<Incidence, Long> {
 	 * @param identificador
 	 * @return
 	 */
-	@Query("SELECT i from Incidence i WHERE i.incidentManagementStaff.identificador = ?1")
+	@Query("SELECT i FROM Incidence i WHERE i.incidentManagementStaff.identificador = ?1")
 	public List<Incidence> findIncidences(String identificador);
 	
 	/**
@@ -49,5 +49,6 @@ public interface IncidencesRepository extends CrudRepository<Incidence, Long> {
 	 * @param id
 	 * @return
 	 */
+	@Query ("SELECT i FROM Incidence i WHERE id = ?1")
 	public Incidence findById(Long id);
 }
