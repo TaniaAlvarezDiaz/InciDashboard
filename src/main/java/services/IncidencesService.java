@@ -16,7 +16,7 @@ import repositories.IncidencesRepository;
  *
  */
 @Service
-public class IncidencesService implements GetIncidences, ModifyIncidence{
+public class IncidencesService implements GetIncidences, UpdateIncidence{
 
 	@Autowired
 	IncidencesRepository incidencesRepository;

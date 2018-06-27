@@ -16,7 +16,7 @@ import model.Incidence.Estado;
 import services.IncidencesService;
 
 @Controller
-public class IncidencesController {
+public class IncidencesController implements SeeIncidences, ModifyIncidence{
 
 	@Autowired
 	IncidencesService incidenceService;
